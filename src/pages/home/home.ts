@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
+// Imported to check platform is ready before calling plugins
+import { Platform } from 'ionic-angular';
 // Imported to use Camera
 import { Camera, CameraOptions } from '@ionic-native/camera';
-import { Platform } from 'ionic-angular';
+
 
 @Component({
   selector: 'page-home',
