@@ -1,17 +1,18 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Home</ion-title>
+    <ion-title>Camera</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+      <!--Inserting button to take call function that takes picture with camera-->
+      <button ion-button (click)="takePicture()">Take a Picture</button>
+      <br>
+      Camera Picture will display below:
+      <br>
+      <!-- 
+        Binding the base64Image varibale to the src attribute of this image.
+        Using Angulars in-built *ngIf directive to detect when an image is available to present.
+      -->
+      <img [src]="base64Image" *ngIf="base64Image" />
 </ion-content>
