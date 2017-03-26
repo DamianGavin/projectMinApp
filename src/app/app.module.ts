@@ -10,6 +10,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 // Ionic Native Plugins I have imported
 import { Camera } from '@ionic-native/camera';
 import { Geolocation } from '@ionic-native/geolocation';
+import { GoogleMaps } from '@ionic-native/google-maps';
 
 // THis Mock Camera functions is used to test the camera with the browser. I got the 64base image from http://base64.wutils.com/encoding-online/
 
@@ -44,7 +45,8 @@ class CameraMock extends Camera {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     //Camera
     { provide: Camera, useClass: CameraMock },
-    Geolocation
-  ]
+    Geolocation,
+    GoogleMaps
+    ]
 })
 export class AppModule {}

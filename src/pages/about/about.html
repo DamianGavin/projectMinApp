@@ -7,5 +7,9 @@
 </ion-header>
 
 <ion-content padding>
-
+  <!--Inserting button to take call function that takes picture with camera-->
+      <button ion-button (click)="getMap()">Get Map</button>
+  <p *ngIf="longtitude">Photo location: Latitude:{{latitude}} and Longtitude:{{longtitude}}</p>
+  <br>
+  <div #map id="map" style="height:100%;"></div>
 </ion-content>
