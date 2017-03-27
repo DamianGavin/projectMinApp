@@ -11,7 +11,17 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { Camera } from '@ionic-native/camera';
 import { Geolocation } from '@ionic-native/geolocation';
 import { GoogleMaps } from '@ionic-native/google-maps';
+// Import the AF2 Module
+import { AngularFireModule } from 'angularfire2';
 
+// Firebase config
+var config = {
+    apiKey: "AIzaSyAZ09oyFchJOsfwS3zljqPbYBP1-9nFa-Y",
+    authDomain: "geophotos-ac25a.firebaseapp.com",
+    databaseURL: "https://geophotos-ac25a.firebaseio.com",
+    storageBucket: "geophotos-ac25a.appspot.com",
+    messagingSenderId: "472267537129"
+};
 // THis Mock Camera functions is used to test the camera with the browser. I got the 64base image from http://base64.wutils.com/encoding-online/
 
 class CameraMock extends Camera {
@@ -30,7 +40,8 @@ class CameraMock extends Camera {
     TabsPage
   ],
   imports: [
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    AngularFireModule.initializeApp(config)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
