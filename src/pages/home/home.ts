@@ -13,6 +13,9 @@ import {
  MarkerOptions,
  Marker
 } from '@ionic-native/google-maps';
+import {AngularFire, FirebaseListObservable} from 'angularfire2';
+import { AlertController, ActionSheetController } from 'ionic-angular';
+import firebase from 'firebase';
 
 @Component({
   selector: 'page-home',
@@ -20,6 +23,13 @@ import {
 })
 export class HomePage {
   
+  geoPhoto = {
+    "image" : "",
+    lat : 0,
+    lon: 0
+  };
+
+  geoPhotos: FirebaseListObservable<any>;
   // Create string to store image
   public base64Image: string;
   // Creating camera options object called options. This will be passed to the getPicture() method later.
@@ -35,11 +45,26 @@ export class HomePage {
   position: CameraPosition;
   markerOptions: MarkerOptions;
   photoMarker: Marker;
-
-  constructor(private camera: Camera, public platform: Platform, private geolocation: Geolocation, private googleMaps: GoogleMaps) {
+  
+  firebase:any;
+  
+  constructor(private camera: Camera, 
+              public platform: Platform,
+              private geolocation: Geolocation,
+              private googleMaps: GoogleMaps,
+              public af: AngularFire, 
+              public actionSheetCtrl: ActionSheetController, 
+              public alertCtrl: AlertController) {
+    
     this.platform.ready().then(() => { 
       this.loadMap();
     });
+
+    
+    this.geoPhotos = af.database.list('geoPhotos');
+    this.firebase = firebase;
+
+
   }//constructor
 
   loadMap() { 
@@ -63,13 +88,34 @@ export class HomePage {
         // imageData is either a base64 encoded string or a file URI
         // If imageData is a base64 encoded string
         this.base64Image = "data:image/jpeg;base64," + imageData;
+        
+        let storageRef = firebase.storage().ref();
+        const filename = Math.floor(Date.now() / 1000);
+        // Create a reference to 'images/todays-date.jpg'
+        const imageRef = storageRef.child(`images/${filename}.jpg`);
+        imageRef.putString(this.base64Image, firebase.storage.StringFormat.DATA_URL).then((snapshot)=> {
+          this.showSuccesfulUploadAlert();
+        });
+
+        
+        this.geoPhoto.image = "data:image/jpeg;base64," + imageData;
         this.geolocation.getCurrentPosition().then(pos => {
         
           this.latitude = pos.coords.latitude;
           this.longtitude = pos.coords.longitude;
           
-          this.photoLocation = new LatLng(this.latitude, this.longtitude);
+          this.geoPhoto.lat = this.latitude;
+          this.geoPhoto.lon = this.longtitude;
           
+          this.af.database.list('/geoPhotos').push(this.geoPhoto);
+          this.geoPhoto = {
+            "image" : "",
+            lat : 0,
+            lon : 0
+          }
+
+
+          this.photoLocation = new LatLng(this.latitude, this.longtitude);
           this.position = {
             target: this.photoLocation,
             zoom: 6,
@@ -105,4 +151,20 @@ export class HomePage {
       })//Camera
     })//Platform
   }//takePicture
+
+
+  showSuccesfulUploadAlert() {
+    let alert = this.alertCtrl.create({
+      title: 'Uploaded!',
+      subTitle: 'Picture is uploaded to Firebase',
+      buttons: ['OK']
+    });
+    alert.present();
+
+    // clear the previous photo data in the variable
+    this.base64Image = "";
+  }
+
+
+
 }//Class

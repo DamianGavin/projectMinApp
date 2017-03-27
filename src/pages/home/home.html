@@ -14,8 +14,23 @@
         Binding the base64Image varibale to the src attribute of this image.
         Using Angulars in-built *ngIf directive to detect when an image is available to present.
       -->
-      <img [src]="base64Image" *ngIf="base64Image" />
+      <ion-card *ngFor="let geoPhoto of geoPhotos | async">
+      <!--<ion-card *ngFor="let post of posts | async" (click)="showOptions(post.$key, post.title, post.body)">-->
+        <ion-card-content>
+          <ion-card-title>
+            <img [src]="geoPhoto.image" *ngIf="geoPhoto.image" />
+            <!--{{post.title}} KEY: {{post.$key}}-->    
+          </ion-card-title>
+          <p>
+            {{geoPhoto.lat}} {{geoPhoto.lon}} 
+          </p>
+      </ion-card-content>
+    </ion-card>
+
+
+
+      <!--<img [src]="base64Image" *ngIf="base64Image" />
       <br>
-      The Map below will show where your picture was taken:
+      The Map below will show where your picture was taken:-->
       <div #map id="map" style="height:100%;"></div>
 </ion-content>
