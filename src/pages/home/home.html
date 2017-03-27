@@ -15,4 +15,7 @@
         Using Angulars in-built *ngIf directive to detect when an image is available to present.
       -->
       <img [src]="base64Image" *ngIf="base64Image" />
+      <br>
+      The Map below will show where your picture was taken:
+      <div #map id="map" style="height:100%;"></div>
 </ion-content>
