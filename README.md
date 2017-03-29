@@ -33,3 +33,6 @@ type PersonName struct {
     Last  string
 }
 ```
+
+## Know issues
+Dont try to run this in ionic view ...just dont!
