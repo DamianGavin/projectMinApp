@@ -1,11 +1,3 @@
-
-
-
-
-
-To use this app you need to:
-
-
 "# projectMinApp" 
 ========
 
@@ -15,25 +7,20 @@ It is called X and it is used for Y
 
 ## Installation
 
-Install the package with go:
+To install the package:
 
 ```sh
+git clone
+npn install
+mkdir www
+ionic state restore
+ionic
 go get github.com/melvinmt/firebase
-```
-
-And add it to your go file:
-
-```go
-package name
-
-import (
-    "github.com/melvinmt/firebase"
-)
 ```
 
 ## Usage
 
-```go
+```typescript
 package main
 
 import (
@@ -45,3 +32,4 @@ type PersonName struct {
     First string
     Last  string
 }
+```
